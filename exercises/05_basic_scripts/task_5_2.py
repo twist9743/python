@@ -24,21 +24,21 @@ Out[1]: '11111111111111111111111111110000'
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 """
-InputIp = input('Введите IP ')
-UserIp = InputIp[:InputIp.find('/')]
-Mask = InputIp[InputIp.find('/'):]
-UserIp = UserIp.split('.')
-MaskNumber = "1"*int(Mask.replace('/', '')) + \
-    (32-int(Mask.replace('/', '')))*"0"
-MaskNumber = MaskNumber[0:8] + ' ' + MaskNumber[8:16] + \
-    ' ' + MaskNumber[16:24] + ' ' + MaskNumber[24:32]
-MaskNumber = MaskNumber.split()
+input_ip = input('Введите IP ')
+user_ip = input_ip[:input_ip.find('/')]
+mask = input_ip[input_ip.find('/')+1:]
+user_ip = user_ip.split('.')
+mask_number = "1"*int(mask) + \
+    (32-int(mask))*"0"
+mask_number = mask_number[0:8] + ' ' + mask_number[8:16] + \
+    ' ' + mask_number[16:24] + ' ' + mask_number[24:32]
+mask_number = mask_number.split()
 print(f'''
      Network:
-     {int(UserIp[0]):<8} {int(UserIp[1]):<8} {int(UserIp[2]):<8} {int(UserIp[3]):<8}
-     {int(UserIp[0]):08b} {int(UserIp[1]):08b} {int(UserIp[2]):08b} {int(UserIp[3]):08b}
+     {int(user_ip[0]):<8} {int(user_ip[1]):<8} {int(user_ip[2]):<8} {int(user_ip[3]):<8}
+     {int(user_ip[0]):08b} {int(user_ip[1]):08b} {int(user_ip[2]):08b} {int(user_ip[3]):08b}
      Mask:
-     {Mask:<8}
-     {int(MaskNumber[0],2):<8} {int(MaskNumber[1],2):<8} {int(MaskNumber[2],2):<8} {int(MaskNumber[3],2):<8}
-     {MaskNumber[0]:<8} {MaskNumber[1]:<8} {MaskNumber[2]:<8} {MaskNumber[3]:<8}
+     /{mask:<8}
+     {int(mask_number[0],2):<8} {int(mask_number[1],2):<8} {int(mask_number[2],2):<8} {int(mask_number[3],2):<8}
+     {mask_number[0]:<8} {mask_number[1]:<8} {mask_number[2]:<8} {mask_number[3]:<8}
      ''')

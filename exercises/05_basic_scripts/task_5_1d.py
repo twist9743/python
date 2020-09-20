@@ -44,13 +44,6 @@ london_co = {
     },
 }
 dictionary = input("Введите название устройства:  ")
-AllParams = london_co[dictionary].keys()
-gg = str(AllParams)
-gg = gg.replace('dict_keys', ' ')
-gg = gg.replace('(', ' ')
-gg = gg.replace(')', ' ')
-gg = gg.replace('[', ' ')
-gg = gg.replace(']', ' ')
-gg = gg.lstrip()
-param = input(f"Введите параметр устройства: {gg}").lower()
+all_params = ','.join(list(london_co[dictionary]))
+param = input(f"Введите параметр устройства ({all_params}) : ").lower()
 print(london_co[dictionary].get(param, 'Такого параметра нет'))

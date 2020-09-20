@@ -17,3 +17,14 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+ip = input('Введите IP - адрес: ')
+ip = ip.replace('.', ' ')
+ip = ip.split()
+bad = 'Неправильный IP-адрес'
+if len(ip) != 4:
+    print(bad)
+for item in ip:
+    if not 0 <= int(ip) <= 255:
+        return bad
+
+print(ip)
