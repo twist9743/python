@@ -27,7 +27,7 @@ else:
         try:
             if int(i) < 0 or int(i) > 255:
                 print(bad)
-        except BaseException:
+        except ValueError:
             print(bad)
     if int(ip[0]) > 0 and int(ip[0]) < 224:
         print('unicast')

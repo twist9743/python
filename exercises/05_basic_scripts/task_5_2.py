@@ -30,15 +30,16 @@ mask = input_ip[input_ip.find('/')+1:]
 user_ip = user_ip.split('.')
 mask_number = "1"*int(mask) + \
     (32-int(mask))*"0"
-mask_number = mask_number[0:8] + ' ' + mask_number[8:16] + \
-    ' ' + mask_number[16:24] + ' ' + mask_number[24:32]
-mask_number = mask_number.split()
-print(f'''
-     Network:
-     {int(user_ip[0]):<8} {int(user_ip[1]):<8} {int(user_ip[2]):<8} {int(user_ip[3]):<8}
-     {int(user_ip[0]):08b} {int(user_ip[1]):08b} {int(user_ip[2]):08b} {int(user_ip[3]):08b}
-     Mask:
-     /{mask:<8}
-     {int(mask_number[0],2):<8} {int(mask_number[1],2):<8} {int(mask_number[2],2):<8} {int(mask_number[3],2):<8}
-     {mask_number[0]:<8} {mask_number[1]:<8} {mask_number[2]:<8} {mask_number[3]:<8}
-     ''')
+mask_number = [mask_number[0:8], mask_number[8:16],
+               mask_number[16:24], mask_number[24:32]]
+print('Network:')
+print("{:<8} {:<8} {:<8} {:<8}".format(int(user_ip[0]), int(
+    user_ip[1]), int(user_ip[2]), int(user_ip[3])))
+print("{:08b} {:08b} {:08b} {:08b}".format(
+    int(user_ip[0]), int(user_ip[1]), int(user_ip[2]), int(user_ip[3])))
+print("Mask:")
+print('{:<8}'.format(mask))
+print('{:<8} {:<8} {:<8} {:<8}'.format(int(mask_number[0], 2), int(
+    mask_number[1], 2), int(mask_number[2], 2), int(mask_number[3], 2)))
+print('{:<8} {:<8} {:<8} {:<8}'.format(int(mask_number[0]), int(
+    mask_number[1]), int(mask_number[2]), int(mask_number[3])))

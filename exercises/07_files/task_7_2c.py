@@ -17,3 +17,10 @@
 """
 
 ignore = ["duplex", "alias", "Current configuration"]
+start_file = input("Введите имя исходного файла конфигурации :")
+end_file = input("Введите имя итогового файла конфигурации :")
+f = open(start_file, 'r')
+g = open(end_file, 'w')
+for line in f:
+    if line.find(ignore[0]) == -1 and line.find(ignore[1]) == -1 and line.find(ignore[2]) == -1:
+        g.writelines(line)

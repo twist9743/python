@@ -23,7 +23,7 @@ while not ip_correct:
                 if int(i) < 0 or int(i) > 255:
                     print(bad)
                     ip = input('Введите IP - адрес еще раз: ')
-            except BaseException:
+            except ValueError:
                 print(bad)
                 ip = input('Введите IP - адрес еще раз: ')
         ip_correct = True
