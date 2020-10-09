@@ -16,3 +16,4 @@ f = open('config_sw1.txt')
 for line in f:
     if line[0] != '!':
         print(line.rstrip())
+f.close()

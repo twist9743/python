@@ -15,5 +15,12 @@
 ignore = ["duplex", "alias", "Current configuration"]
 f = open('config_sw1.txt')
 for line in f:
-    if line[0] != '!' and line.find(ignore[0]) == -1 and line.find(ignore[1]) == -1 and line.find(ignore[2]) == -1:
+    for i in range(len(ignore)):
+        if line[0] != '!' and line.find(ignore[i]) == -1:
+            add_str = True
+        else:
+            add_str = False
+            break
+    if add_str == True:
         print(line.rstrip())
+f.close()

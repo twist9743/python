@@ -22,5 +22,11 @@ end_file = input("Введите имя итогового файла конфи
 f = open(start_file, 'r')
 g = open(end_file, 'w')
 for line in f:
-    if line.find(ignore[0]) == -1 and line.find(ignore[1]) == -1 and line.find(ignore[2]) == -1:
-        g.writelines(line)
+    for i in range(len(ignore)):
+        if line.find(ignore[i]) == -1:
+            add_str = True
+        else:
+            add_str = False
+            break
+    if add_str == True:
+        g.write(line)

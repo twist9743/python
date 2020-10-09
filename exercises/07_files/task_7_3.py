@@ -17,3 +17,11 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+table_mac = open('CAM_table.txt', 'r')
+for line in table_mac:
+    output_table = table_mac.readlines()[5:]
+for i in range(len(output_table)):
+    output_table[i] = output_table[i].split()
+    output_table[i].pop(2)
+    print("{:<6}{:<15}{:<6}".format(*output_table[i]))
+table_mac.close()

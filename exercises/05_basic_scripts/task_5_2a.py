@@ -50,19 +50,15 @@ mask_number = mask_number[0:8] + ' ' + mask_number[8:16] + \
     ' ' + mask_number[16:24] + ' ' + mask_number[24:32]
 ip_address = ip_bin[:mask_number.find('0')] + '0' * (32 - int(mask))
 mask_number = mask_number.split()
-
-
 ip_address = ip_address[0:8] + ' ' + ip_address[8:16] + \
     ' ' + ip_address[16:24] + ' ' + ip_address[24:32]
 ip_address = ip_address.split()
-print('Network:')
-print("{:<8} {:<8} {:<8} {:<8}".format(int(user_ip[0]), int(
-    user_ip[1]), int(user_ip[2]), int(user_ip[3])))
-print("{:08b} {:08b} {:08b} {:08b}".format(
-    int(user_ip[0]), int(user_ip[1]), int(user_ip[2]), int(user_ip[3])))
-print("Mask:")
-print('{:<8}'.format(mask))
-print('{:<8} {:<8} {:<8} {:<8}'.format(int(mask_number[0], 2), int(
-    mask_number[1], 2), int(mask_number[2], 2), int(mask_number[3], 2)))
-print('{:<8} {:<8} {:<8} {:<8}'.format(int(mask_number[0]), int(
-    mask_number[1]), int(mask_number[2]), int(mask_number[3])))
+print(f'''
+     Network:
+     {int(ip_address[0],2):<8} {int(ip_address[1],2):<8} {int(ip_address[2],2):<8} {int(ip_address[3],2):<8}
+     {ip_address[0]:<8} {ip_address[1]:<8} {ip_address[2]:<8} {ip_address[3]:<8}
+     Mask:
+     /{mask:<8}
+     {int(mask_number[0],2):<8} {int(mask_number[1],2):<8} {int(mask_number[2],2):<8} {int(mask_number[3],2):<8}
+     {mask_number[0]:<8} {mask_number[1]:<8} {mask_number[2]:<8} {mask_number[3]:<8}
+     ''')

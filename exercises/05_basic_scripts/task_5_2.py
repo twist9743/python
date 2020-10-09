@@ -41,5 +41,5 @@ print("Mask:")
 print('{:<8}'.format(mask))
 print('{:<8} {:<8} {:<8} {:<8}'.format(int(mask_number[0], 2), int(
     mask_number[1], 2), int(mask_number[2], 2), int(mask_number[3], 2)))
-print('{:<8} {:<8} {:<8} {:<8}'.format(int(mask_number[0]), int(
+print('{:<08} {:<08} {:<08} {:<08}'.format(int(mask_number[0]), int(
     mask_number[1]), int(mask_number[2]), int(mask_number[3])))

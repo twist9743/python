@@ -24,3 +24,18 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+table_mac = open('CAM_table.txt', 'r')
+for line in table_mac:
+    output_table = table_mac.readlines()[5:]
+for i in range(len(output_table)):
+    output_table[i] = output_table[i].split()
+    output_table[i].pop(2)
+for j in range(len(output_table)):
+    for i in range(len(output_table)-1):
+        if int(output_table[i][0]) > int(output_table[i+1][0]):
+            dig_small = output_table[i+1][0]
+            output_table[i+1][0] = output_table[i][0]
+            output_table[i][0] = dig_small
+for line in output_table:
+    print("{:<6}{:<15}{:<6}".format(*line))
+table_mac.close()
