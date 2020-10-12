@@ -51,7 +51,8 @@ access_mode_template = [
     "spanning-tree bpduguard enable",
 ]
 
-access_config = {"FastEthernet0/12": 10, "FastEthernet0/14": 11, "FastEthernet0/16": 17}
+access_config = {"FastEthernet0/12": 10,
+                 "FastEthernet0/14": 11, "FastEthernet0/16": 17}
 
 access_config_2 = {
     "FastEthernet0/03": 100,
@@ -70,3 +71,12 @@ def generate_access_config(intf_vlan_mapping, access_template):
 
     Возвращает список всех портов в режиме access с конфигурацией на основе шаблона
     """
+    port_list = []
+    for word in intf_vlan_mapping:
+        vlans = intf_vlan_mapping[word]
+        port_list.append(f'interface {word}')
+        for line in access_template:
+            if line.find('vlan') != -1:
+                line = f'{line} {vlans}'
+            port_list.append(line)
+    return port_list
