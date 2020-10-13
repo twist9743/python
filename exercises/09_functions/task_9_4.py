@@ -35,3 +35,24 @@ def ignore_command(command, ignore):
     * False - если нет
     """
     return any(word in command for word in ignore)
+
+
+def convert_config_to_dict(config_filename):
+    out_dict = dict()
+    with open(config_filename, 'r') as f:
+        str_file = f.readlines()
+        for line in str_file:
+            if ignore_command(line, ignore) == False and line[0] != "!" and line != "\n":
+                if line.find(" ") != 0:
+                    global_conf = line.strip()
+                    out_dict.update({global_conf: []})
+                else:
+                    while line.find(" ") == 0:
+                        out_dict[global_conf].append(line.strip())
+                        line = f.readline()
+
+    return out_dict
+
+
+print(convert_config_to_dict(
+    "C:/Users/User/Desktop/python/exercises/09_functions/config_sw1.txt"))
