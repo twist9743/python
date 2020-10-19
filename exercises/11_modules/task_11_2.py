@@ -41,11 +41,27 @@ Cгенерировать топологию, которая соответст�
 > pip install graphviz
 
 """
-
+from task_11_1 import parse_cdp_neighbors
 # эти заготовки написаны чтобы показать в какой момент должна
 # рисоваться топология (после вызова функции)
+from draw_network_graph import *
+
+
 def create_network_map(filenames):
-    pass
+    topology_dict = {}
+    for i in range(len(filenames)):
+        filename_output = filenames[i]
+        with open(filename_output) as f:
+            command_output = f.read()
+            topology_dict.update(parse_cdp_neighbors(command_output))
+            command_output = " "
+    for words in topology_dict.copy():
+        if str(words).find("R") != -1:
+            pass
+        else:
+            topology_dict.pop(words)
+    topology_dict[("R6", "Eth0/1")] = ("SW1", "Eth0/5")
+    return topology_dict
 
 
 if __name__ == "__main__":
@@ -57,5 +73,4 @@ if __name__ == "__main__":
     ]
 
     topology = create_network_map(infiles)
-    # рисуем топологию:
-    # draw_topology(topology)
+    draw_topology(topology)

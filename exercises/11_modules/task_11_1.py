@@ -38,6 +38,26 @@ def parse_cdp_neighbors(command_output):
     работать и с файлами и с выводом с оборудования.
     Плюс учимся работать с таким выводом.
     """
+    out_dict = {}
+    dict_keys = []
+    dict_values = []
+    command_output = command_output.split('\n')
+    for words in command_output:
+        if words.find('>') != -1:
+            main = words[:words.find('>')]
+        elif words.find('Eth') != -1:
+            second, main_eth, main_iterator, * \
+                other, second_eth, second_interator = words.split()
+            dict_keys.append(main)
+            dict_values.append(second)
+            main_interface = main_eth+main_iterator
+            second_interface = second_eth+second_interator
+            dict_keys.append(main_interface)
+            dict_values.append(second_interface)
+            out_dict[tuple(dict_keys)] = tuple(dict_values)
+            dict_keys.clear()
+            dict_values.clear()
+    return out_dict
 
 
 if __name__ == "__main__":
