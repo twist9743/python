@@ -49,19 +49,17 @@ from draw_network_graph import *
 
 def create_network_map(filenames):
     topology_dict = {}
-    for i in range(len(filenames)):
-        filename_output = filenames[i]
+    for line in filenames:
+        filename_output = line
         with open(filename_output) as f:
             command_output = f.read()
             topology_dict.update(parse_cdp_neighbors(command_output))
             command_output = " "
-    for words in topology_dict.copy():
-        if str(words).find("R") != -1:
-            pass
-        else:
-            topology_dict.pop(words)
-    topology_dict[("R6", "Eth0/1")] = ("SW1", "Eth0/5")
-    return topology_dict
+    right_topology = dict(topology_dict)
+    for words in topology_dict:
+        if topology_dict[words] in right_topology:
+            right_topology.pop(words)
+    return right_topology
 
 
 if __name__ == "__main__":
