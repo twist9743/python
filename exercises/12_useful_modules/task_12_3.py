@@ -23,3 +23,14 @@ Reachable    Unreachable
 
 Для этого задания нет тестов
 """
+from tabulate import tabulate
+ip_lol = ['10.1.1.1', '10.1.1.2']
+ip_kek = ['10.1.1.7', '10.1.1.8', '10.1.1.9']
+
+
+def print_ip_table(ip_avaliable, ip_unavaliable):
+    return tabulate({'Reachable': ip_avaliable,
+                     'Unreachable': ip_unavaliable}, headers='keys')
+
+
+print(print_ip_table(ip_lol, ip_kek))
