@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>{{ post.author }}, {{ post.date.strftime('%d.%m.%Y') }}</h3>
+<img class="card-img-top" src="{{ url_for('static', filename='images/' ~ post.image_filename) }}" alt="Card image cap">
+<p class="text">{{ post.text }}</p>
+<form>
+    <div class="form-group">
+        <label for="InputComment">Оставьте комментарий</label>
+        <input class="form-control" id="InputComment">
+    </div>
+    <button type="submit" class="btn btn-primary">Отправить</button>
+</form>
+{% for commit in post.comments %}
+<div class="media mt-3">
+    <img class="mr-3" src="{{ url_for('static', filename='images/' ~ '45698606.png') }}" height="64">
+    <div class="media-body">
+        <h5 class="mt-0">{{ commit.author }}</h5>
+        {{ commit.text }}
+        {% for replie in commit.replies %}
+        <div class="media mt-3">
+            <a class="pr-3" href="#">
+                <img src="{{ url_for('static', filename='images/' ~ '45698606.png') }}" height="64">
+            </a>
+            <div class="media-body">
+                <h5 class="mt-0">{{ replie.author }}</h5>
+                {{ replie.text }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
