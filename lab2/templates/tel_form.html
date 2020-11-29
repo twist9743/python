@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST" class=" mt-5">
+    <div class="form-row">
+        <div class="col">
+            <input name="tel" type="tel" class="form-control {% if error_tel_num %}is-invalid{% endif %}" placeholder="Tel"
+                value="{% if tel_num %}{{ tel_num }}{% endif %}" required>
+            {% if error_tel_num %}
+            <div class="invalid-feedback">
+                {{ error_tel_num }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">check</button>
+        </div>
+    </div>
+</form>
+{% endblock %}
