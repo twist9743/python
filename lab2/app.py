@@ -52,7 +52,7 @@ def tel_form():
             tel_num='8-{}-{}-{}-{}'.format(phone_number[1:4],phone_number[4:7],phone_number[7:9],phone_number[9:11])
             return render_template('tel_form.html',tel_num=tel_num)
         elif len(phone_number)==10:
-            tel_num='8-{}-{}-{}-{}'.format(phone_number[0:3],phone_number[3:6],phone_number[6:9],phone_number[9:])
+            tel_num='8-{}-{}-{}-{}'.format(phone_number[0:3],phone_number[3:6],phone_number[6:8],phone_number[8:])
             return render_template('tel_form.html',tel_num=tel_num)
         else:
             error_tel_num="Недопустимый ввод. Неверное количество цифр."
