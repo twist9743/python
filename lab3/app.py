@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from flask_login import login_required
 from mysql_db import MySQL
 import mysql.connector as connector
-login_manager=LoginManager()
+
 
 app = Flask(__name__)
 application = app
@@ -13,28 +13,10 @@ app.config.from_pyfile('config.py')
 
 mysql = MySQL(app)
 
-login_manager.init_app(app)
-login_manager.login_view='login'
-login_manager.login_message='Для доступа к данной странице нужно аутенцифицироваться'
-login_manager.login_message_category='warning'
+from auth import bp as auth_bp , init_login_manager
 
-
-
-class User(UserMixin):
-    def __init__(self,user_id,login):
-        super().__init__()
-        self.id=user_id
-        self.login=login
-
-@login_manager.user_loader
-def load_user(user_id):
-    cursor = mysql.connection.cursor(named_tuple=True)
-    cursor.execute('SELECT * FROM users WHERE id=%s;', (user_id,))
-    db_user = cursor.fetchone()
-    cursor.close()
-    if db_user:
-            return User(user_id=db_user.id, login=db_user.login)
-    return None
+init_login_manager(app)
+app.register_blueprint(auth_bp)
 
 
 def load_roles():
@@ -49,35 +31,6 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/login', methods=['GET','POST'])
-def login():
-    if request.method=='POST':
-        login=request.form.get('login')
-        password=request.form.get('password')
-        remember_me=request.form.get('remember_me')=='on'
-        if login and password:
-            cursor = mysql.connection.cursor(named_tuple=True)
-            cursor.execute('SELECT * FROM users WHERE login = %s and password_hash = SHA2(%s, 256);', (login, password))
-            db_user = cursor.fetchone()
-            cursor.close()
-            if db_user:
-                    user= User(user_id=db_user.id, login=db_user.login)
-                    login_user(user, remember=remember_me)
-
-
-                    flash('Вы успешно аутентифицированны','success')
-                    
-                    next=request.args.get('next')
-                    
-                    return redirect(next or url_for('index'))
-        flash('Введены неверные логин и/или пароль.','danger')    
-    return render_template('login.html')
-
-
-@app.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
 
 @app.route('/users')
 def users():
@@ -99,7 +52,7 @@ def show(user_id):
     role = cursor.fetchone()
     cursor.close()
 
-    return render_template('users/show.html', user=user, roles=role)
+    return render_template('users/show.html', user=user, role=role)
 
 
 @app.route('/users/new')
@@ -184,7 +137,16 @@ def update(user_id):
 @app.route('/users/<int:user_id>/delete', methods=['POST'])
 @login_required
 def delete(user_id):
+    with mysql.connection.cursor(named_tuple=True) as cursor:
+        try:
+            cursor.execute('DELETE FROM users WHERE id=%s;', (user_id,))
+        except connector.errors.DatabaseError as err:
+            flash('Не удалось удалить запись','danger')
+            return redirect(url_for('users'))
+        mysql.connection.commit()
+        flash('Запись успешно удалена','success')
     return redirect(url_for('users'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)

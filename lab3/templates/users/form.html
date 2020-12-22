@@ -36,7 +36,7 @@
         <label for="role_id" class="col-form-label col-md-2">Роль</label>
         <div class="col-md-6">
             <select name="role_id" id="role_id" class="form-control">
-                <option value="" {% if role.id is none %}selected{% endif %}>Не выбрано</option>
+                <option value="" {% if user.role_id is none %}selected{% endif %}>Не выбрано</option>
                 {% for role in roles %}
                     <option value="{{ role.id }}" {% if role.id == user.role_id %}selected{% endif %}>{{ role.name }}</option>
                 {% endfor %}
