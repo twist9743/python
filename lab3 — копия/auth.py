@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from app import mysql
 from users_policy import UsersPolicy
-from functools import wraps
+
 
 bp = Blueprint('auth' , __name__, url_prefix='/auth' )
 
@@ -20,27 +20,6 @@ class User(UserMixin):
         if method:
             return method()
         return False
-
-def load_record(user_id):
-    if user_id is None:
-        return None
-    cursor = mysql.connection.cursor(named_tuple=True)
-    cursor.execute('SELECT * FROM users WHERE id=%s;', (user_id,))
-    record = cursor.fetchone()
-    cursor.close()
-    return record
-
-def check_rights(action):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args,**kwargs):
-            record = load_record(kwargs.get('user_id'))
-            if not current_user.can(action, record=record):
-                flash('У вас недостаточно прав для доступа к данной странице','danger')
-                return redirect(url_for('index'))
-            return func(*args,**kwargs)
-        return wrapper
-    return decorator
 
 def load_user(user_id):
     cursor = mysql.connection.cursor(named_tuple=True)
